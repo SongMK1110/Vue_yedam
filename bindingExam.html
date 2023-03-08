@@ -7,18 +7,19 @@
     <title>Document</title>
     <script src="https://cdn.jsdelivr.net/npm/vue@2.6.0"></script>
     <style>
-      .strike-through {
-        color: blue;
-      }
       .blue-underline {
         text-decoration: underline;
         color: blue;
+      }
+      .strike-through {
+        text-decoration: line-through;
+        color: rgb(162, 0, 255);
       }
     </style>
   </head>
   <body>
     <div id="app">
-      <a v-bind:href="myURL">네이버</a>
+      <a v-bind:href="myURL">네이버로 연결</a>
       <br />
       <img v-bind:src="fileName" />기타
       <p v-bind:align="myAlign1">텍스트 왼쪽 정렬</p>
@@ -27,12 +28,14 @@
       <p v-bind:style="{color: myColor}">인라인 스타일 글자색 빨간색</p>
       <p v-bind:style="{fontSize : mySize}">인라인 스타일 글자크기 150% 크게</p>
       <p
-        v-bind:style="[{fontSize : mySize}, {color: myColor}, {backgroundColor : myBackColor}]"
+        v-bind:style="{fontSize : mySize, color: myColor, backgroundColor : myBackColor}"
       >
         인라인 스타일로 글자크기 150% 빨간색 배경 노랑색
       </p>
-      <p v-bind:class="myClass1">blue-underline 지정</p>
-      <p v-bind:class="[myClass, myClass1]">blue-underline, strike-through</p>
+      <p v-bind:class="underlineClass">blue-underline 지정</p>
+      <p v-bind:class="[underlineClass, strikeClass]">
+        blue-underline, strike-through
+      </p>
     </div>
 
     <script>
@@ -47,8 +50,8 @@
           myColor: "red",
           mySize: "150%",
           myBackColor: "yellow",
-          myClass: "strike-through",
-          myClass1: "blue-underline",
+          strikeClass: "strike-through",
+          underlineClass: "blue-underline",
         },
       });
     </script>
