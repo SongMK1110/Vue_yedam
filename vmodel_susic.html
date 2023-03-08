@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+  </head>
+  <body>
+    <!-- lazy, number, trim -->
+    <div id="app">
+      <input v-model.lazy="myText" />
+      <p>입력후 표시 : {{myText}}</p>
+      <input v-model="myText2" />
+      <p>입력후 표시 : {{myText2}}</p>
+
+      <input v-model.number="myNumber" type="number" />
+      <p>100을 더해서 표시 : {{100+myNumber}}</p>
+
+      <input v-model.trim="myText3" />
+      <p>앞뒤 공백 제거 : {{myText3}}</p>
+
+      <h1>입력폼 활용</h1>
+      이름 : <input v-model.lazy="Text" />
+      <p>좋아하는 색은 :</p>
+      <label>
+        <input type="radio" value="red" v-model="picked" />
+        빨강 </label
+      ><br />
+      <label>
+        <input type="radio" value="green" v-model="picked" />
+        녹색 </label
+      ><br />
+      <label>
+        <input type="radio" value="blue" v-model="picked" />
+        파랑 </label
+      ><br />
+      <label>
+        <input type="radio" value="yellow" v-model="picked" />
+        노랑 </label
+      ><br />
+      <label>
+        <input type="radio" value="grey" v-model="picked" />
+        회색 </label
+      ><br />
+      <p>내 이름은 {{Text}} 이고 좋아하는 색은 {{picked}} 입니다.</p>
+    </div>
+    <script>
+      new Vue({
+        el: "#app",
+        data: {
+          myText: "",
+          myText2: "",
+          myNumber: 0,
+          myText3: "",
+          Text: "",
+          picked: "",
+        },
+      });
+    </script>
+  </body>
+</html>
