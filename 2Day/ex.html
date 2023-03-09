@@ -23,7 +23,7 @@
       <textarea v-model="inputText" v-bind:disabled="textdis"></textarea>
       <br />
       <br />
-      <p>{{count}}개의 문자를 입력하였습니다.</p>
+      <p>{{wordCount}}개의 문자를 입력하였습니다.</p>
       <p>별점 : {{demerit}} (금지문자 1개당 12점)</p>
     </div>
     <script>
@@ -37,8 +37,8 @@
           dis: false,
           inputText: "",
           count: 0,
-          demerit: 0,
           textdis: true,
+          wordCount: 0,
         },
         methods: {
           startTimer: function () {
@@ -59,7 +59,7 @@
               alert("제한 시간 입니다.");
               clearInterval(this.timerObj);
               this.secNum = 0;
-              this.count++;
+              this.wordCount = this.inputText.length;
             }
           },
           inputText: function () {
@@ -72,6 +72,7 @@
                 alert(this.forbiddentText + "는 입력할 수 없습니다.");
                 this.inputText = this.inputText.substr(0, pos);
                 this.restSec += 10;
+                this.count++;
               }
             }
           },
