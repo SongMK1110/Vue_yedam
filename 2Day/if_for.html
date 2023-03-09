@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+  </head>
+  <body>
+    <div id="app">
+      <ul>
+        <!-- myArray 1~10까지 데이터를 담고 있음 -->
+        <!-- 짝수만 li tag에 등록 -->
+        <!-- <li v-for="item in myArray" v-if="item % 2 == 0">{{item}}</li> -->
+        <li v-for="item in myArray">{{item}}</li>
+      </ul>
+      <button v-on:click="evenDate()">짝수만 표시</button>
+    </div>
+
+    <script>
+      new Vue({
+        el: "#app",
+        data: {
+          myArray: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
+        },
+        methods: {
+          evenDate: function () {
+            // filter
+            this.myArray = this.myArray.filter(function (val) {
+              return val % 2 == 0; // myArray가 val에 들어가고 만족하면 true반환 그리고 새로운 배열 만들어줌 (배열에서만 쓸 수 있음 객체 x)
+            });
+          },
+        },
+      });
+    </script>
+    <hr />
+    <div id="app2">
+      <ul>
+        <li v-for="(item, index) in Array">
+          {{item}}
+          <button @click="change(item)">변경</button>
+          <button @click="del(index)">삭제</button>
+        </li>
+      </ul>
+      <button @click="add()">추가</button>
+      <button>정렬</button>
+      <button @click="show()">구구단 보이기</button>
+
+      <div v-if="isShow">
+        <p v-for="n in 9">{{num}}*{{n}} = {{num*n}}</p>
+      </div>
+    </div>
+
+    <script>
+      new Vue({
+        el: "#app2",
+        data: {
+          Array: [2, 4, 6, 8, 10],
+          isShow: false,
+          num: 0,
+        },
+        methods: {
+          show: function () {
+            return this.isShow == true
+              ? (this.isShow = false)
+              : (this.isShow = true);
+          },
+          change: function (item) {
+            this.num = item;
+          },
+          add: function () {
+            this.num++;
+          },
+          del: function (item) {
+            this.num = 0;
+            this.Array.splice(item, 1);
+            // this.Array = this.Array.filter(function (val) {
+            //   return item != val;
+            // });
+          },
+        },
+      });
+    </script>
+  </body>
+</html>

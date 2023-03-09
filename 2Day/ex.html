@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+  </head>
+  <body>
+    <div id="app">
+      <h1>제한 시간내에 문자 입력하기</h1>
+      금지문자(,로 나누어 복수입력가능)
+      <input type="text" v-model="forbiddentText" v-bind:disabled="dis" /><br />
+      제한시간을 입력하세요(초)
+      <input type="number" v-model.number="secNum" v-bind:disabled="dis" />
+      <button @click="startTimer" v-bind:disabled="dis">시작</button>
+      <br />
+      <br />
+      남은시간 : {{restSec}}초
+      <br />
+      <br />
+      <textarea v-model="inputText" v-bind:disabled="textdis"></textarea>
+      <br />
+      <br />
+      <p>{{count}}개의 문자를 입력하였습니다.</p>
+      <p>별점 : {{demerit}} (금지문자 1개당 12점)</p>
+    </div>
+    <script>
+      new Vue({
+        el: "#app",
+        data: {
+          forbiddentText: "",
+          secNum: 0,
+          restSec: 0,
+          timerObj: null,
+          dis: false,
+          inputText: "",
+          count: 0,
+          demerit: 0,
+          textdis: true,
+        },
+        methods: {
+          startTimer: function () {
+            this.dis = true;
+            this.textdis = false;
+            //본인 자신을 가르키는 this를 vueObj에 넣어 줌
+            // const vueObj = this;
+            clearInterval(this.timerObj);
+            this.restSec = this.secNum;
+            this.timerObj = setInterval(() => {
+              this.restSec--;
+            }, 1000);
+          },
+        },
+        watch: {
+          restSec: function () {
+            if (this.restSec <= 0) {
+              alert("제한 시간 입니다.");
+              clearInterval(this.timerObj);
+              this.secNum = 0;
+              this.count++;
+            }
+          },
+          inputText: function () {
+            let dataList = this.forbiddentText.split(",");
+
+            for (let i = 0; i < dataList.length; i++) {
+              let keyword = dataList[i];
+              var pos = this.inputText.indexOf(keyword);
+              if (pos >= 0) {
+                alert(this.forbiddentText + "는 입력할 수 없습니다.");
+                this.inputText = this.inputText.substr(0, pos);
+                this.restSec += 10;
+              }
+            }
+          },
+        },
+        computed: {
+          demerit: function () {
+            return this.count * 12;
+          },
+        },
+      });
+    </script>
+  </body>
+</html>
