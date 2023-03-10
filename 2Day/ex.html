@@ -11,18 +11,12 @@
     <div id="app">
       <h1>제한 시간내에 문자 입력하기</h1>
       금지문자(,로 나누어 복수입력가능)
-      <input type="text" v-model="forbiddentText" v-bind:disabled="dis" /><br />
+      <input type="text" v-model="forbiddentText" :disabled="!dis" /><br />
       제한시간을 입력하세요(초)
-      <input type="number" v-model.number="secNum" v-bind:disabled="dis" />
-      <button @click="startTimer" v-bind:disabled="dis">시작</button>
-      <br />
-      <br />
-      남은시간 : {{restSec}}초
-      <br />
-      <br />
-      <textarea v-model="inputText" v-bind:disabled="textdis"></textarea>
-      <br />
-      <br />
+      <input type="number" v-model.number="secNum" v-bind:disabled="!dis" />
+      <button @click="startTimer" v-bind:disabled="!dis">시작</button>
+      <p>남은시간 : {{restSec}}초</p>
+      <textarea v-model="inputText" v-bind:disabled="dis"></textarea>
       <p>{{wordCount}}개의 문자를 입력하였습니다.</p>
       <p>별점 : {{demerit}} (금지문자 1개당 12점)</p>
     </div>
@@ -34,45 +28,55 @@
           secNum: 0,
           restSec: 0,
           timerObj: null,
-          dis: false,
+          dis: true,
           inputText: "",
           count: 0,
-          textdis: true,
+          // textdis: true,
           wordCount: 0,
         },
         methods: {
           startTimer: function () {
-            this.dis = true;
-            this.textdis = false;
-            //본인 자신을 가르키는 this를 vueObj에 넣어 줌
-            // const vueObj = this;
-            clearInterval(this.timerObj);
+            this.dis = false;
             this.restSec = this.secNum;
+            // this.textdis = false;
+            //본인 자신을 가르키는 this를 vueObj에 넣어 줌
+            // clearInterval(this.timerObj);
+            const vueObj = this;
+            console.log(this);
             this.timerObj = setInterval(() => {
-              this.restSec--;
+              console.log(this); // 콜백함수 쓰면 Vue this
+              // this.restSec--;
+              vueObj.restSec--;
             }, 1000);
+            test();
+            function test() {
+              console.log(this); // window this
+            }
           },
         },
         watch: {
           restSec: function () {
             if (this.restSec <= 0) {
               alert("제한 시간 입니다.");
-              clearInterval(this.timerObj);
+              clearInterval(this.timerObj); // 동작 시키고 있는 타이머를 지우겠다
               this.secNum = 0;
               this.wordCount = this.inputText.length;
+              this.inputText = "";
+              // this.textdis = true;
+              this.dis = true;
             }
           },
           inputText: function () {
             let dataList = this.forbiddentText.split(",");
 
             for (let i = 0; i < dataList.length; i++) {
-              let keyword = dataList[i];
-              var pos = this.inputText.indexOf(keyword);
+              let keyword = dataList[i].trim();
+              let pos = this.inputText.indexOf(keyword);
               if (pos >= 0) {
                 alert(this.forbiddentText + "는 입력할 수 없습니다.");
+                this.count++;
                 this.inputText = this.inputText.substr(0, pos);
                 this.restSec += 10;
-                this.count++;
               }
             }
           },
