@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <!-- Vue.js -->
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <!-- jQuery -->
+    <script
+      src="https://code.jquery.com/jquery-3.6.4.js"
+      integrity="sha256-a9jBBRygX1Bh5lt8GZjXDzyOB+bWve9EiO7tROUtj/E="
+      crossorigin="anonymous"
+    ></script>
+  </head>
+  <body>
+    <script>
+      // 자바스크립트
+      fetch("board.json")
+        .then((response) => response.json())
+        .then((data) => {
+          let findData = data["board"][0];
+          console.log(
+            findData["no"],
+            findData["title"],
+            findData["content"],
+            findData["view"]
+          );
+          console.log("======================");
+        })
+        .catch((err) => console.log(err));
+
+      // jQuery
+      $.ajax({
+        url: "board.json",
+        success: function (data) {
+          let findData = data["board"][0];
+          console.log(
+            findData["no"],
+            findData["title"],
+            findData["content"],
+            findData["view"]
+          );
+          console.log("======================");
+        },
+        error: function (reject) {
+          console.log(reject);
+        },
+      });
+    </script>
+  </body>
+</html>
