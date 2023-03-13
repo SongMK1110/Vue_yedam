@@ -12,4 +12,7 @@ export default {
                 <router-link tag="button" style="float:right;" v-bind:to="{name : 'boardList'}">목록</router-link>
             </div>`,
   props: ["item"],
+  created: function () {
+    this.item.view++;
+  },
 };
