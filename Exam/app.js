@@ -1,10 +1,4 @@
-// 단일 파일 컴포넌트
-
 import myHeader from "./components/header.js";
-// import myBoardList from "./components/myBoardList.js";
-// import myBoardWrite from "./components/myBoardWrite.js";
-// import myBoardRead from "./components/myBoardRead.js";
-// router로 옮겨서 사용
 import router from "./router/router.js";
 
 // this.$data 부모가 가지고 있는 모든 data
@@ -26,11 +20,10 @@ new Vue({
   methods: {
     //data를 주고 받을 수 있도록 데이터 관련 함수
     getParentData: function () {
-      console.log(this.dataArray["board"]);
-      return this.dataArray["board"];
+      return this.dataArray;
     },
     setParentData: function (dataList) {
-      this.dataArray["board"] = dataList;
+      this.dataArray = dataList;
     },
   },
   router,

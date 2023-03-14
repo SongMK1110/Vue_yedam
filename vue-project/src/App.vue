@@ -1,9 +1,15 @@
 <template>
   <nav>
     <router-link to="/">Home</router-link> |
-    <router-link to="/about">About</router-link>
+    <router-link to="/about">About</router-link> |
+    <router-link to="/computedExam">computed</router-link> |
+    <router-link to="/DataBinding">DataBinding</router-link> |
+    <router-link to="/EventClick">EventClick</router-link> |
+    <router-link to="/jinju">Jinju</router-link> |
+    <router-link to="/gimhae">GimHae</router-link> |
+    <router-link to="/seoul">Seoul</router-link>
   </nav>
-  <router-view/>
+  <router-view />
 </template>
 
 <style>
